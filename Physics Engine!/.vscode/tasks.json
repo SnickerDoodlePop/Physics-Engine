@@ -9,6 +9,7 @@
                 "-g",
                 "-std=c++17",
                 "-Iinclude",
+                "-Isrc/include", 
                 "-Llib",
                 "-Lbin",
                 "src/*.cpp",
