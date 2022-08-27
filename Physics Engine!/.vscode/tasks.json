@@ -7,12 +7,19 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "-std=c++17",
+                "-Iinclude",
+                "-Llib",
+                "-Lbin",
+                "src/*.cpp",
+                "-lsfml-graphics",
+                "-lsfml-window", 
+                "-lsfml-system",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "bin/PhysicsEngine.exe"
             ],
             "options": {
-                "cwd": "C:/msys64/mingw64/bin"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
