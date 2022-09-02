@@ -10,21 +10,17 @@ class entity : public sf::CircleShape
 {
 private:
     sf::Vector2f velocity;
-    sf::Vector2f acceleration;
-    void diffEQSolve();
 
 public:
-    entity(sf::Vector2f);
-    entity(void);
-    entity(sf::CircleShape);
-    entity(sf::CircleShape, sf::Vector2f);
+    //constructors / destructor
+    entity(sf::Vector2f); //initial velocity
+    entity(void); //default constructor  
     
-    void setVel(sf::Vector2f);
+    //accessors
+    void setVelocity(sf::Vector2f);
+    sf::Vector2f getVelocity();
     
-    void setAccel(sf::Vector2f);
-    
-    void update(sf::Vector2f);
-    void update(sf::RenderWindow&);
-    void bounceVert();
-    void bounceHor();
+    //member functions
+    void updatePhysics(sf::Vector2f);
+
 };

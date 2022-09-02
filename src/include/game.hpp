@@ -6,6 +6,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include <ctime>
+
 #include <entity.hpp>
 
 /*
@@ -21,14 +23,14 @@ private:
     void initWindow(bool usingBorder);
     
 
-    entity* testEntity = new entity();
 
     //misc
     sf::Vector2i mousePos;
     void initVars();
+    sf::Vector2f gravity;
 
     //entities
-    void initEntities();
+    std::vector<entity*> entities;
 
 public:
     //constructor / destructor
