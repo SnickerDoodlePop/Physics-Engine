@@ -14,7 +14,8 @@ int main(int argc, char const **argv)
     {
         if(x == std::string("-b")) usingBorder = true;
     }
-
+    
+    
     //init game engine
     game* newGame = new game(usingBorder);
     
