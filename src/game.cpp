@@ -1,5 +1,7 @@
 #include <game.hpp>
 #include <iostream>
+#include <ctime>
+#include <random>
 
 //window
 void game::initWindow(bool usingBorder)
@@ -40,7 +42,7 @@ const bool game::isRunning() const
 void game::updateMousePos()
 {
     this->mousePos = sf::Mouse::getPosition(*(this->window));
-    std::cout << this->mousePos.x << " " << this->mousePos.y << std::endl;
+    //std::cout << this->mousePos.x << " " << this->mousePos.y << std::endl;
 }
 
 void game::pollEvents()

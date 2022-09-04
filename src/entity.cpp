@@ -1,28 +1,31 @@
 #include <entity.hpp>
+#include <random>
+
+typedef std::linear_congruential_engine<unsigned int, 48271, 0, 2147483647> minstd_rand;
 
 //initial velocity
 entity::entity(sf::Vector2f velInit) : velocity(velInit)
 {
-    srand((unsigned int)time(NULL));
+    minstd_rand randomNumber {static_cast<unsigned>(time(NULL))};
     this->setFillColor(sf::Color::Black);
     this->setRadius(50.f);
     this->setPosition(sf::Vector2f
     (
-        static_cast<float>(rand() % 1920 + 1),
-        static_cast<float>(rand() % 1080 + 1)
+        static_cast<float>(randomNumber() % 1920),
+        static_cast<float>(randomNumber() % 1080)
     ));
 }
 
 //default constructor
-entity::entity() : velocity(sf::Vector2f(0.f, 0.f))
+entity::entity(void) : velocity(sf::Vector2f(0.f, 0.f))
 {
-    srand((unsigned int)time(NULL));
+    minstd_rand randomNumber {static_cast<unsigned>(time(NULL))};
     this->setFillColor(sf::Color::Black);
     this->setRadius(50.f);
     this->setPosition(sf::Vector2f
     (
-        (rand() % 1920 + 1),
-        (rand() % 1080 + 1)
+        static_cast<float>(randomNumber() % 1920),
+        static_cast<float>(randomNumber() % 1080)
     ));
 }
 
@@ -42,4 +45,4 @@ void entity::updatePhysics(sf::Vector2f acceleration)
 {
     this->setPosition(this->getPosition() + this->velocity);
     this->velocity += acceleration;
-}
+} 
