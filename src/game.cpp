@@ -16,8 +16,11 @@ void game::initWindow(bool usingBorder)
 void game::initVars()
 {
     this->window = nullptr;
-    this->gravity = sf::Vector2f(0,0);
-    this->entities.push_back(new entity{});
+    this->gravity = sf::Vector2f(0,0.1);
+    for(int iterator {0}; iterator < 5; iterator++)
+    {
+        this->entities.push_back(new entity{sf::Vector2f(0,0)});
+    }
 }
 
 //constructor / destructor
@@ -73,6 +76,10 @@ void game::pollEvents()
 
 void game::update()
 {
+    for(auto _entity: this->entities)
+    {
+        _entity->updatePhysics(game::gravity);
+    }
     this->pollEvents();
     this->updateMousePos();
 }
@@ -80,6 +87,9 @@ void game::update()
 void game::render()
 {
     this->window->clear(sf::Color::White);
-    this->window->draw(*(this->entities.at(0)));
+    for(auto _entity: this->entities)
+    {
+        this->window->draw(*_entity);
+    }
     this->window->display();
 }

@@ -1,12 +1,19 @@
 #include <entity.hpp>
 #include <random>
 
+unsigned int iterateSpawnTime = 0;
+
+//declaring special functor to generate pseudo-random numbers
 typedef std::linear_congruential_engine<unsigned int, 48271, 0, 2147483647> minstd_rand;
 
-//initial velocity
+//spawn with initial velocity
 entity::entity(sf::Vector2f velInit) : velocity(velInit)
 {
-    minstd_rand randomNumber {static_cast<unsigned>(time(NULL))};
+    
+
+    //using a functor lmao
+    minstd_rand randomNumber {static_cast<unsigned>(time(NULL)) + iterateSpawnTime};
+    iterateSpawnTime++;
     this->setFillColor(sf::Color::Black);
     this->setRadius(50.f);
     this->setPosition(sf::Vector2f
@@ -16,10 +23,14 @@ entity::entity(sf::Vector2f velInit) : velocity(velInit)
     ));
 }
 
-//default constructor
+//default constructor / spawn stationary
 entity::entity(void) : velocity(sf::Vector2f(0.f, 0.f))
 {
-    minstd_rand randomNumber {static_cast<unsigned>(time(NULL))};
+    
+
+    //using a functor lmao
+    minstd_rand randomNumber {static_cast<unsigned>(time(NULL)) + iterateSpawnTime};
+    iterateSpawnTime++;
     this->setFillColor(sf::Color::Black);
     this->setRadius(50.f);
     this->setPosition(sf::Vector2f

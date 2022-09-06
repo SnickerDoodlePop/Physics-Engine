@@ -7,7 +7,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-
 class entity : public sf::CircleShape
 {
 private:
