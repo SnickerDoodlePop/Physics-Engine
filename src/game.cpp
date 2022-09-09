@@ -19,7 +19,7 @@ void game::initVars()
     this->gravity = sf::Vector2f(0,0.1);
     for(int iterator {0}; iterator < 5; iterator++)
     {
-        this->entities.push_back(new entity{sf::Vector2f(0,0)});
+        this->entities.push_back(new entity{sf::Vector2f(8,0)});
     }
 }
 
@@ -79,6 +79,7 @@ void game::update()
     for(auto _entity: this->entities)
     {
         _entity->updatePhysics(game::gravity);
+        _entity->checkCollision(*(this->window));
     }
     this->pollEvents();
     this->updateMousePos();

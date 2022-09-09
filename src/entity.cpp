@@ -1,5 +1,6 @@
 #include <entity.hpp>
 #include <random>
+#include <cmath>
 
 unsigned int iterateSpawnTime = 0;
 
@@ -51,9 +52,40 @@ sf::Vector2f entity::getVelocity()
     return this->velocity;
 }
 
+sf::Vector2f entity::getVelNorm()
+{
+    float mag = std::sqrt((this->velocity.x * this->velocity.x) + (this->velocity.y * this->velocity.y));
+    return sf::Vector2f((this->velocity.x)/mag, (this->velocity.y)/mag);
+
+}
+
 //member functions
-void entity::updatePhysics(sf::Vector2f acceleration)
+void entity::updatePhysics(sf::Vector2f _acceleration)
 {
     this->setPosition(this->getPosition() + this->velocity);
-    this->velocity += acceleration;
+    this->velocity += _acceleration;
 } 
+
+    //collisions
+void entity::checkCollision(sf::RenderWindow& _window)//, std::vector<entity*>);
+{
+    if(this->getPosition().y + this->getRadius() >= _window.getSize().y || this->getPosition().y <= 0)
+    {
+        bounceVert();
+    }
+    if(this->getPosition().x + this->getRadius() >= _window.getSize().x || this->getPosition().x <= 0)
+    {
+        bounceHor();
+    }
+} 
+
+
+void entity::bounceVert()
+{
+    this->velocity = sf::Vector2f(this->velocity.x, this->velocity.y * -1.f);
+}
+
+void entity::bounceHor()
+{
+    this->velocity = sf::Vector2f(this->velocity.x * -1, this->velocity.y);
+}
