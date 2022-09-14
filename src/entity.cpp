@@ -36,8 +36,8 @@ entity::entity(void) : velocity(sf::Vector2f(0.f, 0.f))
     this->setRadius(50.f);
     this->setPosition(sf::Vector2f
     (
-        static_cast<float>(randomNumber() % 1920),
-        static_cast<float>(randomNumber() % 1080)
+        static_cast<float>(randomNumber() % (1920 - (int)this->getRadius())),
+        static_cast<float>(randomNumber() % (1080 - (int)this->getRadius()))
     ));
 }
 
@@ -69,16 +69,18 @@ void entity::updatePhysics(sf::Vector2f _acceleration)
     //collisions
 void entity::checkCollision(sf::RenderWindow& _window)//, std::vector<entity*>);
 {
-    if(this->getPosition().y + this->getRadius() >= _window.getSize().y || this->getPosition().y <= 0)
+    if(this->getPosition().y + 2*(this->getRadius()) > _window.getSize().y || this->getPosition().y < 0)
     {
         bounceVert();
     }
-    if(this->getPosition().x + this->getRadius() >= _window.getSize().x || this->getPosition().x <= 0)
+    if(this->getPosition().x + 2*(this->getRadius()) > _window.getSize().x || this->getPosition().x < 0)
     {
         bounceHor();
     }
+    /*
+        todo: set ball position to equal bounds!!! 
+    */
 } 
-
 
 void entity::bounceVert()
 {
