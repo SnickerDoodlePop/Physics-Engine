@@ -10,8 +10,6 @@ typedef std::linear_congruential_engine<unsigned int, 48271, 0, 2147483647> mins
 //spawn with initial velocity
 entity::entity(sf::Vector2f velInit) : velocity(velInit)
 {
-    
-
     //using a functor lmao
     minstd_rand randomNumber {static_cast<unsigned>(time(NULL)) + iterateSpawnTime};
     iterateSpawnTime++;
@@ -27,8 +25,6 @@ entity::entity(sf::Vector2f velInit) : velocity(velInit)
 //default constructor / spawn stationary
 entity::entity(void) : velocity(sf::Vector2f(0.f, 0.f))
 {
-    
-
     //using a functor lmao
     minstd_rand randomNumber {static_cast<unsigned>(time(NULL)) + iterateSpawnTime};
     iterateSpawnTime++;
@@ -41,17 +37,19 @@ entity::entity(void) : velocity(sf::Vector2f(0.f, 0.f))
     ));
 }
 
-//accessors
+//velocity setter
 void entity::setVelocity(sf::Vector2f _velocity)
 {
     this->velocity = _velocity;
 }
 
+//velocity getter
 sf::Vector2f entity::getVelocity()
 {
     return this->velocity;
 }
 
+//returns the unit velocity vector
 sf::Vector2f entity::getVelNorm()
 {
     float mag = std::sqrt((this->velocity.x * this->velocity.x) + (this->velocity.y * this->velocity.y));
@@ -59,35 +57,38 @@ sf::Vector2f entity::getVelNorm()
 
 }
 
-//member functions
+//step time forward and set new position
 void entity::updatePhysics(sf::Vector2f _acceleration)
 {
     this->setPosition(this->getPosition() + this->velocity);
     this->velocity += _acceleration;
 } 
 
-    //collisions
-void entity::checkCollision(sf::RenderWindow& _window)//, std::vector<entity*>);
+//detects collision with walls and adjusts velocity accordingly
+void entity::updateCollisions(sf::RenderWindow& _window)
 {
-    if(this->getPosition().y + 2*(this->getRadius()) > _window.getSize().y || this->getPosition().y < 0)
-    {
-        bounceVert();
-    }
-    if(this->getPosition().x + 2*(this->getRadius()) > _window.getSize().x || this->getPosition().x < 0)
-    {
-        bounceHor();
-    }
-    /*
-        todo: set ball position to equal bounds!!! 
-    */
-} 
+    sf::Vector2f currentPos = this->getPosition();
+    float boundingRadius = 2*(this->getRadius());
+    sf::Vector2u windowSize = _window.getSize();
 
-void entity::bounceVert()
-{
-    this->velocity = sf::Vector2f(this->velocity.x, this->velocity.y * -1.f);
-}
-
-void entity::bounceHor()
-{
-    this->velocity = sf::Vector2f(this->velocity.x * -1, this->velocity.y);
+    if(currentPos.y + boundingRadius > windowSize.y)
+    {
+        this->setPosition(currentPos.x, windowSize.y - boundingRadius);
+        this->setVelocity(sf::Vector2f(this->velocity.x, this->velocity.y * -0.9));
+    }
+    if(currentPos.y < 0)
+    {
+        this->setPosition(currentPos.x, 0);
+        this->setVelocity(sf::Vector2f(this->velocity.x, this->velocity.y * -0.9));
+    }
+    if(currentPos.x + boundingRadius > windowSize.x)
+    {
+        this->setPosition(windowSize.x - boundingRadius, currentPos.y);
+        this->setVelocity(sf::Vector2f(this->velocity.x * -0.9, this->velocity.y));
+    }
+    if(currentPos.x < 0)
+    {
+        this->setPosition(0, currentPos.y);
+        this->setVelocity(sf::Vector2f(this->velocity.x * -0.9, this->velocity.y));
+    }
 }

@@ -79,7 +79,7 @@ void game::update()
     for(auto _entity: this->entities)
     {
         _entity->updatePhysics(game::gravity);
-        _entity->checkCollision(*(this->window));
+        _entity->updateCollisions(*(this->window));
     }
     this->pollEvents();
     this->updateMousePos();

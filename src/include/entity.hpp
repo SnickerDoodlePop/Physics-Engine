@@ -13,24 +13,15 @@ private:
     sf::Vector2f velocity;
 
 public:
-    //constructors / destructor
-    entity(sf::Vector2f); //initial velocity
-    entity(void); //default constructor  
+    entity(sf::Vector2f);
+    entity(void);  
     
-    //accessors
     void setVelocity(sf::Vector2f);
     sf::Vector2f getVelocity();
     sf::Vector2f getVelNorm();
-    
-    //member functions
+
     void updatePhysics(sf::Vector2f);
     
-
-    //collisions
-
-    void checkCollision(sf::RenderWindow&); //, std::vector<entity*>);
-
-    void bounceVert();
-    void bounceHor();
+    void updateCollisions(sf::RenderWindow&);
 
 };
