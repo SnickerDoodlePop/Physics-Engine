@@ -1,5 +1,5 @@
 //just cpp things
-#include <game.hpp>
+#include <PHYS/game.hpp>
 #include <iostream>
 
 //using the SFML api
