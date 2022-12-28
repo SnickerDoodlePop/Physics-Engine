@@ -1,1 +1,1 @@
-g++ src/*.cpp -Iinclude -Llib -lsfml-graphics -lsfml-window -lsfml-system -o bin/ball.exe
+g++ src/*.cpp -Iinclude -Llib -l:libsfml-graphics.a -l:libsfml-window.a -l:libsfml-system.a -o bin/ball.exe
